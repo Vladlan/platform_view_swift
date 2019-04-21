@@ -1,0 +1,23 @@
+PODS:
+  - Flutter (1.0.0)
+  - MaterialControls (1.2.2)
+
+DEPENDENCIES:
+  - Flutter (from `.symlinks/flutter/ios`)
+  - MaterialControls
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - MaterialControls
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  MaterialControls: 1c6b29e78d3a13d8dd6a67ed31b6d26eb5de8f72
+
+PODFILE CHECKSUM: 4a320bf98e7f7e414d7d7f5079edf1b2d6679c9b
+
+COCOAPODS: 1.7.0.beta.3
