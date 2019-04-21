@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -36,9 +37,13 @@ class _MyHomePageState extends State<MyHomePage> {
   static const MethodChannel _methodChannel =
       MethodChannel('samples.flutter.io/platform_view_swift');
 
+  static const MethodChannel _methodChannel2 =
+      MethodChannel('samples.flutter.io/platform_view_swift_toggle_play');
+
   int _counter = 0;
 
-  void _incrementCounter() {
+  Future<Null> _incrementCounter() async {
+    await _methodChannel2.invokeMethod('toggle_play');
     setState(() {
       _counter++;
     });

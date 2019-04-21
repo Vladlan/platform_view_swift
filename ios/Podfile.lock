@@ -1,13 +1,16 @@
 PODS:
   - Flutter (1.0.0)
+  - FRadioPlayer (0.1.10)
   - MaterialControls (1.2.2)
 
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
+  - FRadioPlayer
   - MaterialControls
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - FRadioPlayer
     - MaterialControls
 
 EXTERNAL SOURCES:
@@ -16,8 +19,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  FRadioPlayer: f803d7b2ad83d5ccbc988ab88d490f4e6489e1fa
   MaterialControls: 1c6b29e78d3a13d8dd6a67ed31b6d26eb5de8f72
 
-PODFILE CHECKSUM: 4a320bf98e7f7e414d7d7f5079edf1b2d6679c9b
+PODFILE CHECKSUM: f45997bae96ccc433ef8a58c5cf693f8ca5a7563
 
 COCOAPODS: 1.7.0.beta.3

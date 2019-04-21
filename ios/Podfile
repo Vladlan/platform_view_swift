@@ -54,6 +54,7 @@ target 'Runner' do
   }
 
   pod 'MaterialControls'
+  pod 'FRadioPlayer'
 end
 
 post_install do |installer|

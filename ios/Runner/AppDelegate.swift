@@ -21,18 +21,29 @@ import Flutter
       (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
       if ("switchView" == call.method) {
         self.flutterResult = result
-
+        print("switchView")
         let platformViewController = controller.storyboard?.instantiateViewController(withIdentifier: "PlatformView") as! PlatformViewController
         platformViewController.counter = call.arguments as! Int
         platformViewController.delegate = self
 
         let navigationController = UINavigationController(rootViewController: platformViewController)
-        navigationController.navigationBar.topItem?.title = "Platform View"
+        navigationController.navigationBar.topItem?.title = "Platform View1"
         controller.present(navigationController, animated: true, completion: nil)
       } else {
         result(FlutterMethodNotImplemented)
       }
     });
+
+    let radioChannel = FlutterMethodChannel(name:"samples.flutter.io/platform_view_swift_toggle_play", binaryMessenger: controller)
+    radioChannel.setMethodCallHandler({
+      [weak self] (call: FlutterMethodCall, result: FlutterResult) -> Void in
+      guard call.method == "toggle_play" else {
+        result(FlutterMethodNotImplemented)
+        return
+      }
+      print("togglePlaying()")
+//      player.togglePlaying()
+    })
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
