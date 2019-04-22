@@ -64,6 +64,8 @@ class PlatformViewController : UIViewController {
     super.viewDidLoad()
     setIncrementLabelText()
 
+    player.delegate = self
+
     player.radioURL = URL(string: "https://s2.radio.co/se91d38a33/listen")
     player.isAutoPlay = true
     player.enableArtwork = true
@@ -89,37 +91,49 @@ class PlatformViewController : UIViewController {
     let text = String(format: "Button tapped %d %@", self.counter, (self.counter == 1) ? "time" : "times")
     self.incrementLabel.text = text;
   }
+}
 
-
-
-
-
+// MARK: - FRadioPlayerDelegate
+extension PlatformViewController: FRadioPlayerDelegate {
   func radioPlayer(_ player: FRadioPlayer, playerStateDidChange state: FRadioPlayerState) {
-    print("radioPlayer(_ player: FRadioPlayer, playerStateDidChange state: FRadioPlayerState)")
+    print("0")
+    print(state)
     incrementLabel.text = state.description
   }
 
-//  func radioPlayer(_ player: FRadioPlayer, playbackStateDidChange state: FRadioPlaybackState) {
+  func radioPlayer(_ player: FRadioPlayer, playbackStateDidChange state: FRadioPlaybackState) {
 //    playButton.isSelected = player.isPlaying
-//  }
+    print(state)
+    print("1")
+  }
 
   func radioPlayer(_ player: FRadioPlayer, metadataDidChange artistName: String?, trackName: String?) {
-    print("radioPlayer(_ player: FRadioPlayer, metadataDidChange artistName: String?, trackName: String?)")
-    track = Track(artist: artistName, name: trackName)
+      print("2")
+      print("artistName:")
+      print(artistName)
+      print("trackName:")
+      print(trackName)
+      track = Track(artist: artistName, name: trackName)
   }
 
   func radioPlayer(_ player: FRadioPlayer, itemDidChange url: URL?) {
-    print("radioPlayer(_ player: FRadioPlayer, itemDidChange url: URL?)")
-    track = nil
+      print("3")
+      print("url:")
+      print(url)
+      track = nil
   }
 
-//  func radioPlayer(_ player: FRadioPlayer, metadataDidChange rawValue: String?) {
-//    infoContainer.isHidden = (rawValue == nil)
-//  }
+  func radioPlayer(_ player: FRadioPlayer, metadataDidChange rawValue: String?) {
+      print("4")
+      print("rawValue:")
+      print(rawValue)
+//      infoContainer.isHidden = (rawValue == nil)
+  }
 
   func radioPlayer(_ player: FRadioPlayer, artworkDidChange artworkURL: URL?) {
-    print("radioPlayer(_ player: FRadioPlayer, artworkDidChange artworkURL: URL?)")
-
+    print("5")
+    print("artworkURL:")
+    print(artworkURL)
     // Please note that the following example is for demonstration purposes only, consider using asynchronous network calls to set the image from a URL.
     guard let artworkURL = artworkURL, let data = try? Data(contentsOf: artworkURL) else {
 //      artworkImageView.image = stations[selectedIndex].image
@@ -129,16 +143,11 @@ class PlatformViewController : UIViewController {
 //    artworkImageView.image = track?.image
     updateNowPlaying(with: track)
   }
+}
 
+// MARK: - Remote Controls / Lock screen
 
-
-
-
-
-
-
-
-
+extension PlatformViewController {
 
   func setupRemoteTransportControls() {
     print("setupRemoteTransportControls()")
@@ -188,59 +197,25 @@ class PlatformViewController : UIViewController {
 
     nowPlayingInfo[MPMediaItemPropertyTitle] = track?.name ?? stations[0].name
 
-//    if let image = track?.image ?? stations[0].image {
-//      nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { _ -> UIImage in
-//        return image
-//      })
-//    }
+    if #available(iOS 10.0, *) {
+      if let image = track?.image {
+        nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { _ -> UIImage in
+          return image
+        })
+      }
+    } else {
+
+    }
 
     // Set the metadata
     MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
   }
-
-
 }
 
-// MARK: - FRadioPlayerDelegate
+// MARK: - UINavigationController
 
-//extension PlatformViewController: FRadioPlayerDelegate {
-//
-//  func radioPlayer(_ player: FRadioPlayer, playerStateDidChange state: FRadioPlayerState) {
-//    incrementLabel.text = state.description
-//  }
-//
-////  func radioPlayer(_ player: FRadioPlayer, playbackStateDidChange state: FRadioPlaybackState) {
-////    playButton.isSelected = player.isPlaying
-////  }
-//
-//  func radioPlayer(_ player: FRadioPlayer, metadataDidChange artistName: String?, trackName: String?) {
-//    track = Track(artist: artistName, name: trackName)
-//  }
-//
-//  func radioPlayer(_ player: FRadioPlayer, itemDidChange url: URL?) {
-//    track = nil
-//  }
-//
-////  func radioPlayer(_ player: FRadioPlayer, metadataDidChange rawValue: String?) {
-////    infoContainer.isHidden = (rawValue == nil)
-////  }
-//
-//  func radioPlayer(_ player: FRadioPlayer, artworkDidChange artworkURL: URL?) {
-//
-//    // Please note that the following example is for demonstration purposes only, consider using asynchronous network calls to set the image from a URL.
-//    guard let artworkURL = artworkURL, let data = try? Data(contentsOf: artworkURL) else {
-////      artworkImageView.image = stations[selectedIndex].image
-//      return
-//    }
-//    track?.image = UIImage(data: data)
-////    artworkImageView.image = track?.image
-//    updateNowPlaying(with: track)
-//  }
-//}
-
-// MARK: - Remote Controls / Lock screen
-
-extension PlatformViewController {
-
-
+extension UINavigationController {
+  open override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
+  }
 }
